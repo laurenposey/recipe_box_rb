@@ -1,2 +1,20 @@
 <h1>Lauren and Matt's Cookbook</h1>
 <a href="/recipe/new">add recipe</a>
+<a href="/tag/new">add tag</a>
+<hr>
+
+<h1>Current Recipes in Database:</h1>
+
+
+<% if @recipes.any?() %>
+  <ul>
+    <% @recipes.each() do |recipe| %>
+      <li><%= recipe.name() %></li>
+      <% end %>
+  </ul>
+
+<% else %>
+
+    <p>There are no recipes added yet</p>
+
+<% end %>

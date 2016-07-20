@@ -1,0 +1,25 @@
+<h1>Add new recipe:</h1>
+
+<form action="/recipes" method="post">
+  <label for="name">Recipe Name:</label>
+  <input id="name" name="name" type="test">
+
+  <div class="checkbox">
+    <% if @tags.any?() %>
+      <% @tags.each() do |tag| %>
+
+        <label>
+          <input type="checkbox" for="tag_ids" name="tag_ids" value="<%= tag.id() %>">
+          <%= tag.name() %>
+        </label>
+      <% end %>
+
+    <% else %>
+
+      <p>There are no tags yet!</p>
+    <% end %>
+  </div>
+
+  <button class="btn" type="submit">Add recipe</button>
+</form>
+<a href="/"><button class="btn" type="button">home</button></a>
