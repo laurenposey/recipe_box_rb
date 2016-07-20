@@ -1,0 +1,80 @@
+<h1>Edit Recipe</h1>
+<h1><%= @recipe.name() %></h1>
+
+<form action="/recipes/<%= @recipe.id() %>" method="post">
+  <input name="_method" type="hidden" value="patch">
+  <label for="name">Change the name of the recipe:</label>
+  <input id="name" name="name" type="text">
+
+  <button type="submit">Update</button>
+</form>
+<hr>
+
+
+<% if @ingredients.any?() %>
+  <ul>
+    <% @ingredients.each() do |ingredient| %>
+      <% if @recipe.ingredients.include?(ingredient) %>
+        <li>
+          <form action="/ingredients/<%= ingredient.id() %>/remove/<%= @recipe.id() %>" method="post">
+            <input type="hidden" name="_method" value="patch">
+            <button type="submit">Remove ingredient</button> <%= ingredient.name() %>
+         </form>
+        </li>
+        <% else %>
+        <li>
+          <form action="/ingredients/<%= ingredient.id() %>/add/<%= @recipe.id() %>" method="post">
+            <input type="hidden" name="_method" value="patch">
+            <button type="submit">Add ingredient</button> <%= ingredient.name() %>
+         </form>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+
+<% else %>
+
+    <p>There are no tags added yet</p>
+
+<% end %>
+
+
+<hr>
+
+
+<% if @tags.any?() %>
+  <ul>
+    <% @tags.each() do |tag| %>
+      <% if @recipe.tags.include?(tag) %>
+        <li>
+          <form action="/tags/<%= tag.id() %>/remove/<%= @recipe.id() %>" method="post">
+            <input type="hidden" name="_method" value="patch">
+            <button type="submit">Remove tag</button> <%= tag.name() %>
+         </form>
+        </li>
+        <% else %>
+        <li>
+          <form action="/tags/<%= tag.id() %>/add/<%= @recipe.id() %>" method="post">
+            <input type="hidden" name="_method" value="patch">
+            <button type="submit">Add tag</button> <%= tag.name() %>
+         </form>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+
+<% else %>
+
+    <p>There are no tags added yet</p>
+
+<% end %>
+
+
+<hr>
+<form action="/recipes/<%= @recipe.id() %>/delete" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit">Delete</button>
+</form>
+
+<a href="/">home</a>

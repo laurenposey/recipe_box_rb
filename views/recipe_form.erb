@@ -3,13 +3,37 @@
 <form action="/recipes" method="post">
   <label for="name">Recipe Name:</label>
   <input id="name" name="name" type="test">
+<hr>
+<h3>Ingredients:</h3>
+<div class="checkbox">
+  <% if @ingredients.any?() %>
+    <% @ingredients.each() do |ingredient| %>
 
+      <label name="ingredient_ids">
+        <input type="checkbox" name="ingredient_ids[]" value="<%= ingredient.id() %>">
+        <%= ingredient.name() %>
+      </label>
+    <% end %>
+
+  <% else %>
+
+    <p>There are no ingredients yet!</p>
+  <% end %>
+  <br>
+  <br>
+</div>
+<label for="new_ingredient">ingredient Name:</label>
+<input id="new_ingredient" name="new_ingredient" type="text">
+
+<button class="btn" type="submit">Add ingredient</button>
+<hr>
+<h3>Tags:</h3>
   <div class="checkbox">
     <% if @tags.any?() %>
       <% @tags.each() do |tag| %>
 
-        <label>
-          <input type="checkbox" for="tag_ids" name="tag_ids" value="<%= tag.id() %>">
+        <label name="tag_ids">
+          <input type="checkbox" name="tag_ids[]" value="<%= tag.id() %>">
           <%= tag.name() %>
         </label>
       <% end %>
@@ -19,7 +43,8 @@
       <p>There are no tags yet!</p>
     <% end %>
   </div>
-
+<hr>
   <button class="btn" type="submit">Add recipe</button>
 </form>
+<hr>
 <a href="/"><button class="btn" type="button">home</button></a>

@@ -1,0 +1,28 @@
+<h1>Add new ingredient:</h1>
+
+<form action="/ingredients" method="post">
+  <label for="name">ingredient Name:</label>
+  <input id="name" name="name" type="text">
+
+  <button class="btn" type="submit">Add ingredient</button>
+</form>
+<a href="/"><button class="btn" type="button">home</button></a>
+
+
+<% if @ingredients.any?() %>
+  <ul>
+    <% @ingredients.each() do |ingredient| %>
+      <li>
+        <form action="/ingredients/<%= ingredient.id() %>/delete" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit">Delete</button> <%= ingredient.name() %>
+        </form>
+      </li>
+      <% end %>
+  </ul>
+
+<% else %>
+
+    <p>There are no ingredients added yet</p>
+
+<% end %>

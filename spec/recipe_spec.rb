@@ -14,4 +14,20 @@ describe(Recipe) do
     expect(test_recipe.tags()).to(eq([test_tag, test_tag1]))
     end
   end
+
+  describe('#ingredients')do
+    it("tells you what ingrdients area associated with the recipe") do
+      test_ingredient = Ingredient.create({:name => "basil"})
+      test_ingredient1 = Ingredient.create({:name => "rosemary"})
+      test_ingredient2 = Ingredient.create({:name => "oregano"})
+      test_recipe = Recipe.create({:name => "alfredo sauce"})
+      test_recipe.ingredients.push(test_ingredient1)
+      test_recipe.ingredients.push(test_ingredient2)
+
+
+    expect(test_recipe.ingredients()).to(eq([test_ingredient1, test_ingredient2]))
+    end
+  end
+
+  
 end
