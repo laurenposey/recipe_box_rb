@@ -1,0 +1,31 @@
+<h1><%= @recipe.name() %></h1>
+
+<h3>Ingredients:</h3>
+<% if @recipe.ingredients.any?() %>
+
+  <ul>
+    <% @recipe.ingredients.each() do |ingredient| %>
+      <li><%= ingredient.name %></li>
+    <% end %>
+  </ul>
+
+<% else %>
+  <p>there are no ingredients for this recipe yet!</p>
+<% end %>
+
+<h3>Instructions:</h3>
+<p><%= @recipe.instructions() %></p>
+
+<h3>Tags:</h3>
+<% if @recipe.tags.any?() %>
+
+  <ul>
+    <% @recipe.tags.each() do |tag| %>
+      <li><%= tag.name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no tags yet!</p>
+<% end %>
+
+<a href="/recipe/<%= @recipe.id() %>/edit">Update</a>

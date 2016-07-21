@@ -25,8 +25,9 @@ post('/recipes') do
   tag_ids = params['tag_ids']
   ingredient_ids = params['ingredient_ids']
   ingredent_new = params.fetch("new_ingredient")
+  instructions = params.fetch("instructions")
   if ingredent_new == ''
-    @recipe = Recipe.create({:name => name, :tag_ids => tag_ids, :ingredient_ids => ingredient_ids})
+    @recipe = Recipe.create({:name => name, :instructions => instructions, :tag_ids => tag_ids, :ingredient_ids => ingredient_ids})
     if @recipe.save()
       redirect to('/')
     else
@@ -69,11 +70,16 @@ delete('/ingredients/:id/delete') do
   redirect('/ingredients/new')
 end
 
-get('/recipes/:id/edit') do
+get('/recipe/:id/edit') do
   @recipe = Recipe.find(params.fetch('id').to_i())
   @tags = Tag.all()
   @ingredients = Ingredient.all()
   erb(:recipe_edit)
+end
+
+get('/recipe/:id') do
+  @recipe = Recipe.find(params.fetch('id').to_i())
+  erb(:recipe_card)
 end
 
 patch('/recipes/:id') do
@@ -81,7 +87,7 @@ patch('/recipes/:id') do
   @recipe = Recipe.find(params.fetch('id').to_i())
   @recipe.update({:name => name})
   if @recipe.save()
-    redirect to('/')
+    redirect to("/recipe/#{@recipe.id()}/edit")
   else
     redirect('/recipes/:id')
   end
@@ -107,7 +113,7 @@ patch('/tags/:id/remove/:recipe_id') do
   recipe_id = params.fetch('recipe_id')
   recipe = Recipe.find(recipe_id)
   recipe.tags.destroy(tag)
-  redirect to("/recipes/#{recipe_id}/edit")
+  redirect to("/recipe/#{recipe_id}/edit")
 end
 
 patch('/tags/:id/add/:recipe_id') do
@@ -116,7 +122,7 @@ patch('/tags/:id/add/:recipe_id') do
   recipe_id = params.fetch('recipe_id')
   recipe = Recipe.find(recipe_id)
   recipe.tags.push(tag)
-  redirect to("/recipes/#{recipe_id}/edit")
+  redirect to("/recipe/#{recipe_id}/edit")
 end
 
 patch('/ingredients/:id/remove/:recipe_id') do
@@ -125,7 +131,7 @@ patch('/ingredients/:id/remove/:recipe_id') do
   recipe_id = params.fetch('recipe_id')
   recipe = Recipe.find(recipe_id)
   recipe.ingredients.destroy(ingredient)
-  redirect to("/recipes/#{recipe_id}/edit")
+  redirect to("/recipe/#{recipe_id}/edit")
 end
 
 patch('/ingredients/:id/add/:recipe_id') do
@@ -134,5 +140,13 @@ patch('/ingredients/:id/add/:recipe_id') do
   recipe_id = params.fetch('recipe_id')
   recipe = Recipe.find(recipe_id)
   recipe.ingredients.push(ingredient)
-  redirect to("/recipes/#{recipe_id}/edit")
+  redirect to("/recipe/#{recipe_id}/edit")
+end
+
+patch("/update/:id/instructions") do
+  recipe_id = params.fetch('id').to_i()
+  instructions = params.fetch("instructions")
+  recipe = Recipe.find(recipe_id)
+  recipe.update({:instructions => instructions})
+  redirect to("/recipe/#{recipe_id}/edit")
 end

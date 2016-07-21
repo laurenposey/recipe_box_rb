@@ -4,13 +4,12 @@
 <form action="/recipes/<%= @recipe.id() %>" method="post">
   <input name="_method" type="hidden" value="patch">
   <label for="name">Change the name of the recipe:</label>
-  <input id="name" name="name" type="text">
-
+  <input value="<%= @recipe.name() %>" id="name" name="name" type="text">
   <button type="submit">Update</button>
 </form>
 <hr>
 
-
+<h3>Update Ingredients</h3>
 <% if @ingredients.any?() %>
   <ul>
     <% @ingredients.each() do |ingredient| %>
@@ -34,13 +33,19 @@
 
 <% else %>
 
-    <p>There are no tags added yet</p>
+    <p>There are no ingredients added yet</p>
 
 <% end %>
-
+<hr>
+<h3>Update Instructions:</h3>
+<form class="" action="/update/<%= @recipe.id() %>/instructions" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <textarea name="instructions" rows="8" cols="120" value="<%= @recipe.instructions() %>"><%= @recipe.instructions() %></textarea>
+  <button type="submit">Update</button>
+</form>
 
 <hr>
-
+<h3>Update Tags</h3>
 
 <% if @tags.any?() %>
   <ul>
@@ -68,6 +73,7 @@
     <p>There are no tags added yet</p>
 
 <% end %>
+
 
 
 <hr>
