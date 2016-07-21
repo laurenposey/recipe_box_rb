@@ -32,22 +32,23 @@
 
 <form action="/recipe/<%= @recipe.id() %>/rating"  method="post">
   <button value=1 name="rating">
-    <span class = "glyphicon glyphicon-star-empty"></span>
+    <span class = "glyphicon <%= (@recipe.rating().<(1))? 'glyphicon-star-empty':'glyphicon-star' %>"></span>
   </button>
 
   <button value=2 name="rating">
-    <span class = "glyphicon glyphicon-star-empty"></span>
+    <span class = "glyphicon <%= (@recipe.rating().<(2))? 'glyphicon-star-empty':'glyphicon-star' %>"></span>
   </button>
 
   <button value=3 name="rating">
-    <span class = "glyphicon glyphicon-star-empty"></span>
+    <span class = "glyphicon <%= (@recipe.rating().<(3))? 'glyphicon-star-empty':'glyphicon-star' %>"></span>
   </button>
 
   <button value=4 name="rating">
-    <span class = "glyphicon glyphicon-star-empty"></span>
+    <span class = "glyphicon <%= (@recipe.rating().<(4))? 'glyphicon-star-empty':'glyphicon-star' %>"></span>
   </button>
 
   <button value=5 name="rating">
-    <span class = "glyphicon glyphicon-star-empty"></span>
+    <span class = "glyphicon <%= (@recipe.rating().<(5))? 'glyphicon-star-empty':'glyphicon-star' %>"></span>
   </button>
 </form>
+<h3><%= @recipe.rating() %></h3>
