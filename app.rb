@@ -26,8 +26,9 @@ post('/recipes') do
   ingredient_ids = params['ingredient_ids']
   ingredent_new = params.fetch("new_ingredient")
   instructions = params.fetch("instructions")
+  rating = 0
   if ingredent_new == ''
-    @recipe = Recipe.create({:name => name, :instructions => instructions, :tag_ids => tag_ids, :ingredient_ids => ingredient_ids})
+    @recipe = Recipe.create({:name => name, :instructions => instructions,  :rating => rating, :tag_ids => tag_ids, :ingredient_ids => ingredient_ids})
     if @recipe.save()
       redirect to('/')
     else
@@ -149,4 +150,12 @@ patch("/update/:id/instructions") do
   recipe = Recipe.find(recipe_id)
   recipe.update({:instructions => instructions})
   redirect to("/recipe/#{recipe_id}/edit")
+end
+
+post('/recipe/:id/rating') do
+  id = params.fetch('id').to_i()
+  recipe = Recipe.find(id)
+  rating = params.fetch('rating').to_i()
+  recipe.update({:rating => rating})
+  redirect to("/recipe/#{recipe.id}")
 end
