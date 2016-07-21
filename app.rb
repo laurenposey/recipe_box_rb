@@ -9,7 +9,7 @@ require('pg')
 require('pry')
 
 get('/') do
-  @recipes = Recipe.all()
+  @recipes = Recipe.order(rating: :desc)
   erb(:index)
 end
 
@@ -158,4 +158,36 @@ post('/recipe/:id/rating') do
   rating = params.fetch('rating').to_i()
   recipe.update({:rating => rating})
   redirect to("/recipe/#{recipe.id}")
+end
+
+get('/search') do
+  @ingredients = Ingredient.all()
+  erb(:search_recipes)
+end
+
+post('/search') do
+
+  ingredient_ids = []
+  ingredient_ids_string = params['ingredient_ids']
+  ingredient_ids_string.each() do |id|
+    ingredient_ids.push(id.to_i())
+  end
+  @recipes = []
+  recipes = Recipe.all()
+    recipes.each() do |recipe|
+    recipe_ingredients = recipe.ingredients()
+    recipe_ingredients_ids = []
+    recipe_ingredients.each() do |ingredient|
+      ingredient_id = ingredient.id()
+      recipe_ingredients_ids.push(ingredient_id)
+    end
+
+    if (recipe_ingredients_ids-ingredient_ids).empty?
+
+      @recipes.push(recipe.name())
+    end
+  end
+  @recipes
+  @ingredients = Ingredient.all()
+  erb(:search_recipes)
 end

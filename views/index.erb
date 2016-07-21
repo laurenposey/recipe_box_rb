@@ -2,6 +2,7 @@
 <a href="/recipe/new">add recipe</a>
 <a href="/tag/new">add tag</a>
 <a href="/ingredients/new">add ingredients</a>
+<a href="/search">search recipes</a>
 
 <hr>
 
@@ -11,7 +12,7 @@
 <% if @recipes.any?() %>
   <ul>
     <% @recipes.each() do |recipe| %>
-      <li><a href="/recipe/<%= recipe.id() %>" id='<% recipe.id() %>' ><%= recipe.name() %></a></li>
+      <li><a href="/recipe/<%= recipe.id() %>" id='<% recipe.id() %>' ><%= recipe.name() %></a> <%=recipe.rating%></li>
       <% end %>
   </ul>
 

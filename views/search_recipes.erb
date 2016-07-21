@@ -1,0 +1,33 @@
+<a href="/">home</a>
+
+<h1>Search for recipes that include an ingrediant you wanna use:</h1>
+<form action="/search" method="post">
+  <div class="checkbox">
+    <% if @ingredients.any?() %>
+      <% @ingredients.each() do |ingredient| %>
+
+        <label name="ingredient_ids">
+          <input type="checkbox" name="ingredient_ids[]" value="<%= ingredient.id() %>">
+          <%= ingredient.name() %>
+        </label>
+      <% end %>
+
+    <% else %>
+
+      <p>There are no ingredients yet!</p>
+    <% end %>
+  </div>
+  <button type="submit" name="button">Search</button>
+</form>
+<%if @recipes != nil%>
+  <% if @recipes.any?() %>
+    <h3>here's what you can cook:</h3>
+    <ul>
+      <% @recipes.each() do |recipe| %>
+      <li><%= recipe %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>There are no recipe you can cook!</p>
+  <% end %>
+<% end %>
